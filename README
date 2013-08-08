@@ -1,0 +1,27 @@
+Currently only the poppler glib interface is used.
+
+This is not quite perfect, as it does not allow setting the error
+"handler", and the default one outputs to stderr.
+
+Debian provides libpoppler-private-dev including poppler/Error.h with
+
+  void setErrorFunction(void (* f)(int , char *, va_list args));
+
+for Poppler versions before 0.20 and
+
+  void setErrorCallback(void (*cbk)(void *data, ErrorCategory category,
+                                    int pos, char *msg),
+                        void *data);
+
+for Poppler 0.20 or later.
+
+Instead of relying on the availability of the private header, we test
+whether we can use setErrorFunction() or setErrorCallback() when adding
+the above declarations and -lpoppler when linking.  If one of these is
+successful, we register our own error function/callback which instead of
+writing to stderr gathers error messages in a character vector which can
+returned as the "errors" attribute of the object computed, and used by 
+print() methods as needed.
+
+[This is a bit of a nuisance, as poppler-glib is C but the setting the 
+error function/callback must be done in C++ ...]

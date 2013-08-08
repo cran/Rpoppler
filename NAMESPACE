@@ -1,0 +1,11 @@
+useDynLib("Rpoppler")
+
+export("PDF_doc",
+       "PDF_info",
+       "PDF_fonts",
+       "PDF_text")
+
+S3method("print", "PDF_doc")
+S3method("format", "PDF_info")
+S3method("print", "PDF_info")
+S3method("print", "PDF_fonts")
