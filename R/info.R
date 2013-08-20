@@ -6,7 +6,7 @@ function(file)
     y <- .Call("PDF_info", x$doc)
 
     ## Convert dates here (could also do so in the C code).
-    d <- c("Creation_Date", "Modification_Date")
+    d <- c("CreationDate", "ModDate")
     y[d] <- lapply(y[d], .POSIXct, tz = "GMT")
 
     ## Simplify and expand info on page sizes.

@@ -139,12 +139,12 @@ SEXP PDF_info(SEXP x)
 
     t = poppler_document_get_creation_date(doc);
     val = (t == -1) ? ScalarReal(NA_REAL) : ScalarReal((double) t);
-    SET_STRING_ELT(nms, 6, mkChar("Creation_Date"));
+    SET_STRING_ELT(nms, 6, mkChar("CreationDate"));
     SET_VECTOR_ELT(ans, 6, val);
 
     t = poppler_document_get_modification_date(doc);
     val = (t == -1) ? ScalarReal(NA_REAL) : ScalarReal((double) t);
-    SET_STRING_ELT(nms, 7, mkChar("Modification_Date"));
+    SET_STRING_ELT(nms, 7, mkChar("ModDate"));
     SET_VECTOR_ELT(ans, 7, val);
 
     /* We also get the page layout and mode and permissions properties
