@@ -11,10 +11,10 @@ typedef enum ErrorCategory {
     errSyntaxWarning
 } ErrorCategory;
 
-SEXP PDF_doc(SEXP name);
-SEXP PDF_fonts(SEXP x);
-SEXP PDF_info(SEXP x);
-SEXP PDF_text(SEXP x);
+SEXP Rpoppler_PDF_doc(SEXP name);
+SEXP Rpoppler_PDF_fonts(SEXP x);
+SEXP Rpoppler_PDF_info(SEXP x);
+SEXP Rpoppler_PDF_text(SEXP x);
 
 #ifdef __cplusplus
 extern "C" {

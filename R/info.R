@@ -3,7 +3,7 @@ function(file)
 {
     x <- PDF_doc_from_file(file)
     
-    y <- .Call("PDF_info", x$doc)
+    y <- .Call(Rpoppler_PDF_info, x$doc)
 
     ## Convert dates here (could also do so in the C code).
     d <- c("CreationDate", "ModDate")

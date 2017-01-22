@@ -55,7 +55,7 @@ static SEXP Rpoppler_error_array_to_sexp ()
     return ans;
 }
 
-SEXP PDF_doc(SEXP name)
+SEXP Rpoppler_PDF_doc(SEXP name)
 {
     SEXP ptr;
     PopplerDocument *doc;
@@ -86,7 +86,7 @@ static void PDF_doc_finalizer(SEXP ptr)
     }
 }
 
-SEXP PDF_info(SEXP x)
+SEXP Rpoppler_PDF_info(SEXP x)
 {
     SEXP ans, nms, val, err;
     PopplerDocument *doc;
@@ -196,7 +196,7 @@ SEXP PDF_info(SEXP x)
     return ans;
 }
 
-SEXP PDF_fonts(SEXP x)
+SEXP Rpoppler_PDF_fonts(SEXP x)
 {
     SEXP ans, tmp, val;
     PopplerDocument *doc;
@@ -262,7 +262,7 @@ SEXP PDF_fonts(SEXP x)
     return ans;
 }
 
-SEXP PDF_text(SEXP x)
+SEXP Rpoppler_PDF_text(SEXP x)
 {
     SEXP ans, tmp;
     PopplerDocument *doc;

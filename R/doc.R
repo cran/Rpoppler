@@ -7,7 +7,7 @@ function(file)
 {
     file <- file_path_to_URI(file)[1L]
     
-    doc <- .Call("PDF_doc", file)
+    doc <- .Call(Rpoppler_PDF_doc, file)
     y <- list(doc = doc, file = file)
     class(y) <- "PDF_doc"
     

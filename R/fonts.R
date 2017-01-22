@@ -3,7 +3,7 @@ function(file)
 {
     x <- PDF_doc_from_file(file)
 
-    y <- .Call("PDF_fonts", x$doc)
+    y <- .Call(Rpoppler_PDF_fonts, x$doc)
 
     errors <- attr(y, "errors")
     

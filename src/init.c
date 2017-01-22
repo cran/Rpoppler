@@ -8,10 +8,10 @@
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_CallMethodDef callMethods[] = {
-    CALLDEF(PDF_doc, 1),
-    CALLDEF(PDF_info, 1),
-    CALLDEF(PDF_fonts, 1),
-    CALLDEF(PDF_text, 1),
+    CALLDEF(Rpoppler_PDF_doc, 1),
+    CALLDEF(Rpoppler_PDF_info, 1),
+    CALLDEF(Rpoppler_PDF_fonts, 1),
+    CALLDEF(Rpoppler_PDF_text, 1),
 
     {NULL, NULL, 0}
 };
