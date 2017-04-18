@@ -107,45 +107,45 @@ SEXP Rpoppler_PDF_info(SEXP x)
 
     s = poppler_document_get_title(doc);
     val = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);
-    SET_STRING_ELT(nms, 0, mkChar("Title"));
     SET_VECTOR_ELT(ans, 0, val);
+    SET_STRING_ELT(nms, 0, mkChar("Title"));
 
     s = poppler_document_get_subject(doc);
     val = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);
-    SET_STRING_ELT(nms, 1, mkChar("Subject"));
     SET_VECTOR_ELT(ans, 1, val);
+    SET_STRING_ELT(nms, 1, mkChar("Subject"));
 
     s = poppler_document_get_keywords(doc);
     val = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);
-    SET_STRING_ELT(nms, 2, mkChar("Keywords"));
     SET_VECTOR_ELT(ans, 2, val);
+    SET_STRING_ELT(nms, 2, mkChar("Keywords"));
 
     s = poppler_document_get_author(doc);
     val = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);
-    SET_STRING_ELT(nms, 3, mkChar("Author"));
     SET_VECTOR_ELT(ans, 3, val);
+    SET_STRING_ELT(nms, 3, mkChar("Author"));
 
     s = poppler_document_get_creator(doc);
     val = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);
-    SET_STRING_ELT(nms, 4, mkChar("Creator"));
     SET_VECTOR_ELT(ans, 4, val);
+    SET_STRING_ELT(nms, 4, mkChar("Creator"));
 
     s = poppler_document_get_producer(doc);
     val = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);
-    SET_STRING_ELT(nms, 5, mkChar("Producer"));
     SET_VECTOR_ELT(ans, 5, val);
+    SET_STRING_ELT(nms, 5, mkChar("Producer"));
 
     /* The date property getters return the respective dates or -1. */
 
     t = poppler_document_get_creation_date(doc);
     val = (t == -1) ? ScalarReal(NA_REAL) : ScalarReal((double) t);
-    SET_STRING_ELT(nms, 6, mkChar("CreationDate"));
     SET_VECTOR_ELT(ans, 6, val);
+    SET_STRING_ELT(nms, 6, mkChar("CreationDate"));
 
     t = poppler_document_get_modification_date(doc);
     val = (t == -1) ? ScalarReal(NA_REAL) : ScalarReal((double) t);
-    SET_STRING_ELT(nms, 7, mkChar("ModDate"));
     SET_VECTOR_ELT(ans, 7, val);
+    SET_STRING_ELT(nms, 7, mkChar("ModDate"));
 
     /* We also get the page layout and mode and permissions properties
        using
@@ -156,8 +156,8 @@ SEXP Rpoppler_PDF_info(SEXP x)
     */
 
     n = poppler_document_get_n_pages(doc);
-    SET_STRING_ELT(nms, 8, mkChar("Pages"));
     SET_VECTOR_ELT(ans, 8, ScalarInteger(n));
+    SET_STRING_ELT(nms, 8, mkChar("Pages"));
 
     PROTECT(val = allocVector(REALSXP, 2 * n));
     for(i = 0, j = 0; i < n; i++) {
@@ -167,31 +167,32 @@ SEXP Rpoppler_PDF_info(SEXP x)
 	REAL(val)[j] = h; j++;
 	g_object_unref(page);
     }
+    SET_VECTOR_ELT(ans, 9, val);
     UNPROTECT(1);
     SET_STRING_ELT(nms, 9, mkChar("Sizes"));
-    SET_VECTOR_ELT(ans, 9, val);
 
-    SET_STRING_ELT(nms, 10, mkChar("Optimized"));
     SET_VECTOR_ELT(ans, 10,
 		   ScalarLogical(poppler_document_is_linearized(doc) ?
 				 TRUE : FALSE));
+    SET_STRING_ELT(nms, 10, mkChar("Optimized"));
 
     s = poppler_document_get_pdf_version_string(doc);
     val = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);    
-    SET_STRING_ELT(nms, 11, mkChar("PDF_Version"));
     SET_VECTOR_ELT(ans, 11, val);
+    SET_STRING_ELT(nms, 11, mkChar("PDF_Version"));
 
     s = poppler_document_get_metadata(doc);
     val = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);    
-    SET_STRING_ELT(nms, 12, mkChar("Metadata"));
     SET_VECTOR_ELT(ans, 12, val);
+    SET_STRING_ELT(nms, 12, mkChar("Metadata"));
 
     setAttrib(ans, R_NamesSymbol, nms);
 
-    setAttrib(ans, install("errors"), Rpoppler_error_array_to_sexp());
+    SEXP serrors = PROTECT(Rpoppler_error_array_to_sexp());
+    setAttrib(ans, install("errors"), serrors);
     Rpoppler_error_array_free();
     
-    UNPROTECT(2);
+    UNPROTECT(3);
 
     return ans;
 }
@@ -215,7 +216,7 @@ SEXP Rpoppler_PDF_fonts(SEXP x)
     while(poppler_font_info_scan(info, n, &iter)) {
 	if(!iter) continue;
 	do {
-	    val = allocVector(VECSXP, 6);
+	    PROTECT(val = allocVector(VECSXP, 6));
 	    s = poppler_fonts_iter_get_name(iter);
 	    tmp = (s == NULL) ? ScalarString(NA_STRING) : mkString(s);
 	    SET_VECTOR_ELT(val, 0, tmp);
@@ -247,6 +248,8 @@ SEXP Rpoppler_PDF_fonts(SEXP x)
 	    b = poppler_fonts_iter_is_subset(iter);
 	    SET_VECTOR_ELT(val, 5, ScalarLogical(b));
 	    ans = CONS(val, ans);	    
+	    UNPROTECT(2); /* ans, val */
+	    PROTECT(ans);
 	} while(poppler_fonts_iter_next(iter));
 	poppler_fonts_iter_free(iter);
     }
@@ -254,10 +257,11 @@ SEXP Rpoppler_PDF_fonts(SEXP x)
 
     PROTECT(ans = coerceVector(ans, VECSXP));
 
-    setAttrib(ans, install("errors"), Rpoppler_error_array_to_sexp());
+    SEXP serrors = PROTECT(Rpoppler_error_array_to_sexp());
+    setAttrib(ans, install("errors"), serrors);
     Rpoppler_error_array_free();
 
-    UNPROTECT(2);
+    UNPROTECT(3);
 
     return ans;
 }
@@ -284,10 +288,11 @@ SEXP Rpoppler_PDF_text(SEXP x)
 	g_object_unref(page);
     }
 
-    setAttrib(ans, install("errors"), Rpoppler_error_array_to_sexp());
+    SEXP serrors = PROTECT(Rpoppler_error_array_to_sexp());
+    setAttrib(ans, install("errors"), serrors);
     Rpoppler_error_array_free();
 
-    UNPROTECT(1);
+    UNPROTECT(2);
 
     return ans;
 }
