@@ -13,7 +13,7 @@ void setErrorCallback(void (*cbk)(void *data, ErrorCategory category,
 #endif
 
 extern "C" {
-void Rpoppler_set_error_function () {
+void Rpoppler_set_error_function (void) {
 #ifdef HAVE_SET_ERROR_FUNCTION    
     setErrorFunction( Rpoppler_error_function );
 #endif

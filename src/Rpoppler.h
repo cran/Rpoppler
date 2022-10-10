@@ -22,7 +22,7 @@ extern "C" {
     void Rpoppler_error_function(int pos, char *msg, va_list args);
     void Rpoppler_error_callback(void *data, ErrorCategory category,
 				 int pos, char *msg);
-    void Rpoppler_set_error_function();
+    void Rpoppler_set_error_function(void);
 #ifdef __cplusplus
 }
 #endif

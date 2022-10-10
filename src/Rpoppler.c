@@ -21,7 +21,7 @@ static char **Rpoppler_error_array = NULL;
 static int Rpoppler_error_array_size = 0;
 static int Rpoppler_error_count = 0;
 
-static void Rpoppler_error_array_init()
+static void Rpoppler_error_array_init(void)
 {
     int n = 100;
     Rpoppler_error_count = 0;
@@ -29,7 +29,7 @@ static void Rpoppler_error_array_init()
     Rpoppler_error_array_size = n;
 }
 
-static void Rpoppler_error_array_free()
+static void Rpoppler_error_array_free(void)
 {
     int i;
     for(i = 0; i < Rpoppler_error_count; i++) {
@@ -41,7 +41,7 @@ static void Rpoppler_error_array_free()
     Rpoppler_error_array_size = 0;
 }
 
-static SEXP Rpoppler_error_array_to_sexp ()
+static SEXP Rpoppler_error_array_to_sexp (void)
 {
     SEXP ans;
     int i;
