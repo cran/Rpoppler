@@ -35,6 +35,6 @@ file_path_to_URI <-
 function(path)
 {
     sprintf("%s%s",
-            if(.Platform$OS == "windows") "file:///" else "file://",
+            if(.Platform$OS.type == "windows") "file:///" else "file://",
             normalizePath(path))
 }
