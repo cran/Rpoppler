@@ -25,7 +25,7 @@ static void Rpoppler_error_array_init(void)
 {
     int n = 100;
     Rpoppler_error_count = 0;
-    Rpoppler_error_array = Calloc(n, char *);
+    Rpoppler_error_array = R_Calloc(n, char *);
     Rpoppler_error_array_size = n;
 }
 
@@ -33,9 +33,9 @@ static void Rpoppler_error_array_free(void)
 {
     int i;
     for(i = 0; i < Rpoppler_error_count; i++) {
-	Free(Rpoppler_error_array[i]);
+	R_Free(Rpoppler_error_array[i]);
     }
-    Free(Rpoppler_error_array);
+    R_Free(Rpoppler_error_array);
     Rpoppler_error_array = NULL;
     Rpoppler_error_count = 0;
     Rpoppler_error_array_size = 0;
@@ -308,29 +308,29 @@ void Rpoppler_error_function(int pos, char *msg, va_list args)
     if(Rpoppler_error_count > Rpoppler_error_array_size) {
 	Rpoppler_error_array_size += 100;
 	Rpoppler_error_array =
-	    Realloc(Rpoppler_error_array,
-		    Rpoppler_error_array_size,
-		    char *);
+	    R_Realloc(Rpoppler_error_array,
+		      Rpoppler_error_array_size,
+		      char *);
     }
 
     if(pos >= 0) {
 	n1 = snprintf(NULL, 0, "Error (%d): ", pos) + 1;
-	s1 = Calloc(n1, char);
+	s1 = R_Calloc(n1, char);
 	snprintf(s1, n1, "Error (%d): ", pos);
     } else {
 	n1 = 8;
-	s1 = Calloc(n1, char);
+	s1 = R_Calloc(n1, char);
 	snprintf(s1, n1, "Error: ");
     }
     n2 = vsnprintf(NULL, 0, msg, args) + 1;
-    s2 = Calloc(n2, char);
+    s2 = R_Calloc(n2, char);
     vsnprintf(s2, n2, msg, args);
     n3 = n1 + n2 - 1;
-    s3 = Calloc(n3, char);
+    s3 = R_Calloc(n3, char);
     strcpy(s3, s1);
     strcat(s3, s2);
-    Free(s1);
-    Free(s2);
+    R_Free(s1);
+    R_Free(s2);
 
     Rpoppler_error_array[i] = s3;
 }
@@ -348,18 +348,18 @@ void Rpoppler_error_callback(void *data, ErrorCategory category,
     if(Rpoppler_error_count > Rpoppler_error_array_size) {
 	Rpoppler_error_array_size += 100;
 	Rpoppler_error_array =
-	    Realloc(Rpoppler_error_array,
-		    Rpoppler_error_array_size,
-		    char *);
+	    R_Realloc(Rpoppler_error_array,
+		      Rpoppler_error_array_size,
+		      char *);
     }
 
     if(pos >= 0) {
 	n = snprintf(NULL, 0, "Error (%d): %s", pos, msg) + 1;
-	s = Calloc(n, char);
+	s = R_Calloc(n, char);
 	snprintf(s, n, "Error (%d): %s", pos, msg);
     } else {
 	n = 8 + strlen(msg) + 1;
-	s = Calloc(n, char);
+	s = R_Calloc(n, char);
 	snprintf(s, n, "Error: %s", msg);
     }
     

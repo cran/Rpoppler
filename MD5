@@ -1,4 +1,4 @@
-b6ffac6ea451daed88c64d14c5bc6786 *DESCRIPTION
+3369b2865b411d7e93a5ffcfb3689bfa *DESCRIPTION
 026112465c5bbf12b44de7819a66a24c *NAMESPACE
 28943940fc9b3ad66a3c56a4d7c56b13 *R/doc.R
 b1c77b1a53f2754c545088091e529454 *R/fonts.R
@@ -8,12 +8,13 @@ c9212f37ac60376a6292afe0317cedf0 *README
 c3b9f8e891cb38c495d0f337765cc670 *cleanup
 2144386e73c459015b677f70180edb31 *configure
 564abd792996ceaa48814b5938e1accd *configure.ac
+4a8f3a18ff6461fac011331d909c3b1b *configure.win
 4954c7a10d79a9aeeeba2eba193ccbd8 *man/PDF_doc.Rd
 20803dfccbb3bec735183188fa8e6d51 *man/PDF_fonts.Rd
 d2df7f81f01de2e383fcb1b727659063 *man/PDF_info.Rd
 bc8ae684e9241af50f1e2e39fb13a818 *man/PDF_text.Rd
 5dc69fb8e10efd1cc31bd491fb8b9ed9 *src/Makevars.in
-44003959f3bcd0974d32113e12a5d5f1 *src/Rpoppler.c
+8098c6a9d1e4d3991a02463b947f4110 *src/Rpoppler.c
 987f166391ae9bec0e71c2229c4f6807 *src/Rpoppler.h
 a75ff9204afbcf1d38637137227b1177 *src/config.h.in
 9a67cbf7f83bbc8935ede7e5c4551f58 *src/error.cc
